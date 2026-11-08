@@ -35,5 +35,10 @@ their own licenses:
    Modifications: Kaggle support, pinned WanGP version, headless image editing without a web UI,
    upload/edit/history cells, safety filter, Hindi instructions.
 
-7. FFmpeg static builds by BtbN — https://github.com/BtbN/FFmpeg-Builds
+7. The Rang Manga Android app (app/) is adapted from the user's own Rang AI app (draw-app).
+   It calls hosted services with the user's own keys, stored only on the phone:
+   OpenRouter Images API (model black-forest-labs/flux-3-image-klein) and fal.ai
+   (fal-ai/qwen-image-edit-2511, fal-ai/qwen-image-edit-plus-lora). Their terms of service apply.
+
+8. FFmpeg static builds by BtbN — https://github.com/BtbN/FFmpeg-Builds
    (downloaded only when the runtime's FFmpeg is too old; GPL builds, checksum-verified).

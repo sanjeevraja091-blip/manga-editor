@@ -1,6 +1,27 @@
 # 🎨 Rang Manga Editor
 
-अपनी **manga / anime तस्वीर upload करें और लिखकर बताएँ कि क्या बदलना है**। ये free GPU (Kaggle या Google Colab) पर चलता है, फ़ोन के browser से।
+अपनी **manga / anime तस्वीर upload करें और लिखकर बताएँ कि क्या बदलना है**। इसके दो रूप हैं:
+
+1. **Rang Manga Android ऐप** (नीचे देखें): तेज़, हर edit कुछ सेकंड में। हर edit पर थोड़ा पैसा लगता है।
+2. **Free notebook** (`RangMangaEditor.ipynb`): free GPU (Kaggle या Google Colab) पर चलता है, पर धीमा है।
+
+## 📱 Rang Manga ऐप
+
+**Install:** इस repo के **Releases** पेज से नया `RangManga-v1.0.x.apk` डाउनलोड करके खोलें। हर push पर GitHub अपने-आप नया APK बनाता है।
+
+**पहली बार:** ऐप में **Settings** खोलें और एक key डालें:
+- **OpenRouter key** (FLUX 3 Klein): [openrouter.ai/keys](https://openrouter.ai/keys) पर बनाएँ, थोड़ा credit डालें। हर edit लगभग $0.008।
+- **fal key** (Qwen Edit 2511, manga add-ons के साथ): [fal.ai/dashboard/keys](https://fal.ai/dashboard/keys)। हर edit लगभग $0.03–0.04।
+
+Key सिर्फ़ आपके फ़ोन में रहती है, ऐप के code या इस repo में नहीं।
+
+**इस्तेमाल:** तस्वीर चुनें → Quick edit या "What should change?" में लिखें → **Edit picture**। हर edit पिछले result पर होता है। **Undo**, **Hold: before** (पहले वाली तस्वीर देखें), **Save** (Pictures › Rang Manga), Gallery में **Share / Edit more**। "Add extra pictures" से characters को scene में डालें।
+
+> 🔒 Adult/sexual edits रोके जाते हैं: ऐप में text filter, और दोनों सेवाओं के अपने safety filters।
+
+> Clients को ऐप देना हो तो key ऐप में मत डालिए। उसके लिए एक छोटा server (जैसे Supabase Edge Function) चाहिए जो key अपने पास रखे।
+
+## 📓 Free notebook
 
 ## क्या-क्या कर सकते हैं
 - **लिखकर edit:** *"Make her hair red"*, *"Give him a sword"*, *"Change the background to a night city"*

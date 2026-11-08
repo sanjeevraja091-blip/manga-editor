@@ -1,6 +1,12 @@
 .ipynb_checkpoints/
 __pycache__/
-*.png
-*.jpg
 *.zip
 .DS_Store
+.gradle/
+build/
+app/build/
+local.properties
+.idea/
+*.iml
+*.jks
+*.keystore

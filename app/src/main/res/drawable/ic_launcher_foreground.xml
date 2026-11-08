@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Manga speech bubble with an ink-pen spark: the Rang Manga mark. Kept inside the 66dp safe zone. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- bubble -->
+    <path
+        android:fillColor="#FFF4F1EC"
+        android:pathData="M54,30 C70.6,30 82,39.4 82,51 C82,62.6 70.6,72 54,72 C50.6,72 47.4,71.6 44.5,70.8 L33,78 L36.2,67.4 C30,63.6 26,57.6 26,51 C26,39.4 37.4,30 54,30 Z" />
+    <!-- colour drops inside the bubble -->
+    <path
+        android:fillColor="#FFFF7A3D"
+        android:pathData="M38,51 a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0 Z" />
+    <path
+        android:fillColor="#FFFF4F8B"
+        android:pathData="M48,51 a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0 Z" />
+    <path
+        android:fillColor="#FF2FD3C6"
+        android:pathData="M58,51 a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0 Z" />
+</vector>

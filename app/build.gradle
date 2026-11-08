@@ -1,0 +1,56 @@
+plugins {
+    id 'com.android.application'
+}
+
+// Build number comes from GitHub Actions (run number); local builds use 1.
+def buildNumber = (System.getenv('VERSION_CODE') ?: '1').toInteger()
+
+// Signing details come from environment variables set by the build workflow.
+// The signing key is never stored in this repository.
+def keystorePath = System.getenv('SIGNING_KEYSTORE')
+
+android {
+    namespace 'com.rangai.manga'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.rangai.manga'
+        minSdk 26
+        targetSdk 35
+        versionCode buildNumber
+        versionName "1.0.${buildNumber}"
+    }
+
+    signingConfigs {
+        release {
+            if (keystorePath) {
+                storeFile file(keystorePath)
+                storePassword System.getenv('SIGNING_STORE_PASSWORD')
+                keyAlias System.getenv('SIGNING_KEY_ALIAS') ?: 'rangmanga'
+                keyPassword System.getenv('SIGNING_KEY_PASSWORD')
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig keystorePath ? signingConfigs.release : signingConfigs.debug
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    lint {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation 'androidx.webkit:webkit:1.12.1'
+    implementation 'androidx.core:core:1.13.1'
+}

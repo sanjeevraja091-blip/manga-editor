@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src https:; object-src 'none'; base-uri 'none'">
+<meta name="color-scheme" content="dark">
+<title>Rang Manga</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true"></span>Rang Manga</div>
+    <div class="engine-tag" id="engineTag">FLUX 3 Klein</div>
+  </header>
+
+  <main id="main">
+    <!-- EDIT -->
+    <section class="view active" id="view-edit">
+      <div class="stage" id="stage">
+        <img class="result" id="stageImg" alt="Current picture" hidden>
+        <span class="stage-badge" id="stageBadge" hidden></span>
+        <button class="empty" id="stageEmpty" type="button">
+          <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>
+          <span class="big">Choose a manga picture</span>
+          <span>Tap here, then write what should change.</span>
+        </button>
+        <div class="stage-error" id="stageError" hidden>
+          <div class="big">Couldn't edit the picture</div>
+          <div class="msg" id="stageErrorMsg"></div>
+          <button class="pill-btn" id="stageErrorOk" type="button">OK</button>
+        </div>
+        <div class="progress" id="progress" hidden>
+          <div class="progress-top"><span class="spinner" aria-hidden="true"></span><span class="progress-title" id="progressTitle">Editing…</span></div>
+          <div class="progress-sub" id="progressSub"></div>
+          <div class="bar indeterminate"><i></i></div>
+        </div>
+      </div>
+
+      <div class="tools" id="tools">
+        <button class="tool" id="toolPick" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5M5 20h14"/></svg>New
+        </button>
+        <button class="tool" id="toolCompare" type="button" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M12 4v16"/></svg>Hold: before
+        </button>
+        <button class="tool" id="toolUndo" type="button" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/></svg>Undo
+        </button>
+        <button class="tool" id="toolSave" type="button" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Save
+        </button>
+      </div>
+
+      <div class="label">Quick edit</div>
+      <div class="chips" id="quickChips"></div>
+
+      <label class="label" for="prompt"><span>What should change?</span><span class="hint" id="promptHint">English works best</span></label>
+      <textarea id="prompt" rows="3" maxlength="1200" placeholder="Make her hair red and add a small smile"></textarea>
+
+      <div class="row toggle-row">
+        <span>Keep everything else the same <span class="hint">(lines, faces, background)</span></span>
+        <label class="switch"><input type="checkbox" id="keepStyle"><span></span></label>
+      </div>
+
+      <div class="card">
+        <div class="row"><b>Extra pictures</b><span class="hint" id="extrasHint">characters / objects to add</span></div>
+        <div class="extras" id="extras">
+          <button class="extra-add" id="extraAdd" type="button" aria-label="Add extra picture">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="label">Engine</div>
+      <div class="seg" id="engineSeg">
+        <button type="button" data-engine="klein"><b>FLUX 3 Klein</b><small>Fast · about ₹0.7</small></button>
+        <button type="button" data-engine="qwen"><b>Qwen Edit 2511</b><small>Manga add-ons · about ₹3</small></button>
+      </div>
+      <div class="note" id="engineNote"></div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="view" id="view-gallery">
+      <div class="gal-head"><h2>Gallery</h2><span class="hint" id="galCount"></span></div>
+      <div class="grid" id="galGrid"></div>
+      <div class="empty-gal" id="galEmpty" hidden>Your edited pictures will show up here.</div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="view" id="view-settings">
+      <div class="gal-head"><h2>Settings</h2></div>
+
+      <div class="set-group">
+        <h3>OpenRouter key <span class="hint">(FLUX 3 Klein)</span></h3>
+        <p>Make a key at <a href="https://openrouter.ai/keys" target="_blank" rel="noopener">openrouter.ai/keys</a> and add a few dollars of credit. One edit costs about $0.008. The key stays only on this phone.</p>
+        <div class="inline">
+          <input type="password" id="keyOpenrouter" placeholder="sk-or-…" autocomplete="off" spellcheck="false">
+          <button class="pill-btn" data-show="keyOpenrouter" type="button">Show</button>
+        </div>
+        <div class="inline gap-top">
+          <button class="btn primary" data-save="openrouter" type="button">Save key</button>
+          <button class="btn" data-clear="openrouter" type="button">Remove</button>
+        </div>
+      </div>
+
+      <div class="set-group">
+        <h3>fal key <span class="hint">(Qwen Edit 2511)</span></h3>
+        <p>Make a key at <a href="https://fal.ai/dashboard/keys" target="_blank" rel="noopener">fal.ai/dashboard/keys</a> and add credit. One edit costs about $0.03–0.04. The key stays only on this phone.</p>
+        <div class="inline">
+          <input type="password" id="keyFal" placeholder="Paste your fal key" autocomplete="off" spellcheck="false">
+          <button class="pill-btn" data-show="keyFal" type="button">Show</button>
+        </div>
+        <div class="inline gap-top">
+          <button class="btn primary" data-save="fal" type="button">Save key</button>
+          <button class="btn" data-clear="fal" type="button">Remove</button>
+        </div>
+      </div>
+
+      <div class="set-group">
+        <h3>Gallery</h3>
+        <p id="storageInfo">Pictures are kept on this phone.</p>
+        <button class="btn danger full" id="clearGallery" type="button">Delete all pictures</button>
+      </div>
+
+      <div class="set-group">
+        <h3>About</h3>
+        <p class="tight" id="aboutText">Rang Manga</p>
+        <p class="tight">Edits are made by FLUX 3 Image Klein (via OpenRouter) or Qwen Image Edit 2511 (via fal). Your pictures and text are sent to the service you choose. Adult/sexual edits are blocked.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="genbar" id="genBar">
+    <button class="gen-btn" id="genBtn" type="button">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 4.9L19 9.6l-5.2 1.7L12 16l-1.8-4.7L5 9.6l5.2-1.7z"/></svg>
+      <span id="genLabel">Edit picture</span>
+    </button>
+  </div>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab on" data-tab="edit" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.9L19 9.6l-5.2 1.7L12 16l-1.8-4.7L5 9.6l5.2-1.7z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>Edit
+    </button>
+    <button class="tab" data-tab="gallery" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>Gallery
+    </button>
+    <button class="tab" data-tab="settings" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>Settings
+    </button>
+  </nav>
+
+  <!-- VIEWER -->
+  <div class="viewer" id="viewer" hidden>
+    <div class="viewer-top">
+      <button class="icon-btn" id="viewerClose" type="button" aria-label="Close">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <span class="hint" id="viewerDate"></span>
+      <span class="icon-btn"></span>
+    </div>
+    <div class="viewer-img"><img id="viewerImg" alt=""></div>
+    <div class="viewer-info">
+      <div class="viewer-prompt" id="viewerPrompt"></div>
+      <div class="viewer-meta" id="viewerMeta"></div>
+    </div>
+    <div class="viewer-actions">
+      <button class="act" id="vSave" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Save</button>
+      <button class="act" id="vShare" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M8.2 10.8l7.6-4.4M8.2 13.2l7.6 4.4"/></svg>Share</button>
+      <button class="act" id="vEdit" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg>Edit more</button>
+      <button class="act danger" id="vDelete" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>Delete</button>
+    </div>
+  </div>
+
+  <!-- CONFIRM -->
+  <div class="sheet-wrap" id="sheet" hidden>
+    <div class="sheet">
+      <p id="sheetText"></p>
+      <div class="btns">
+        <button class="btn" id="sheetCancel" type="button">Cancel</button>
+        <button class="btn danger" id="sheetOk" type="button">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" hidden></div>
+</div>
+<input type="file" id="fileMain" accept="image/*" hidden>
+<input type="file" id="fileExtra" accept="image/*" hidden>
+<script src="app.js"></script>
+</body>
+</html>
