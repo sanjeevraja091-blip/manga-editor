@@ -1,0 +1,39 @@
+Rang Manga Editor
+Copyright 2026 Rang Manga Editor contributors
+
+This repository contains a notebook (RangMangaEditor.ipynb) licensed under the Apache License 2.0
+(see LICENSE). It is a free, non-commercial wrapper around other projects. It does not include their
+code or model weights; they are downloaded at run time from their official sources and stay under
+their own licenses:
+
+1. WanGP (Wan2GP) by DeepBeepMeep — https://github.com/deepbeepmeep/Wan2GP
+   License: WanGP Community License 2.0. Used here for free personal use only, as that license
+   allows. Pinned version: commit f0b54e02aa32b539e7be5c65cf4ada67db69da26 (v19.13, 6 Nov 2026).
+   Rang Manga Editor is not made or endorsed by the WanGP author.
+
+2. Qwen-Image-Edit-2511 by the Qwen team (Alibaba) — https://github.com/QwenLM/Qwen-Image
+   License: Apache License 2.0. Lightning 4/8-step accelerator LoRAs (lightx2v), as packaged by
+   WanGP (huggingface.co/DeepBeepMeep/Qwen_image).
+
+3. FLUX 3 Image Klein by Black Forest Labs — https://docs.bfl.ml/flux_3/flux3_image_klein
+   License: FLUX Kommunity License. Commercial use of outputs only for Qualifying Users (under
+   US$5M gross annual revenue), with content filtering/review and AI-disclosure conditions.
+
+4. Manga / anime add-on LoRAs, downloaded from Hugging Face, each under its own license:
+   nappa114514/Qwen-Image-Edit-2509-Manga-Tone, prithivMLmods/Qwen-Image-Edit-2511-Anime,
+   autoweeb/Qwen-Image-Edit-2509-Photo-to-Anime, fal/Qwen-Image-Edit-2511-Multiple-Angles-LoRA,
+   prithivMLmods/Qwen-Image-Edit-2511-Noir-Comic-Book-Panel,
+   prithivMLmods/Qwen-Image-Edit-2511-Unblur-Upscale.
+   The selection of add-ons follows PRITHIVSAKTHIUR/Qwen-Image-Edit-2511-LoRAs-Fast-Lazy-Load
+   (Apache License 2.0) — https://github.com/PRITHIVSAKTHIUR/Qwen-Image-Edit-2511-LoRAs-Fast-Lazy-Load
+
+5. Safety filter model: Falconsai/nsfw_image_detection (Apache License 2.0), Hugging Face.
+
+6. Setup steps in the notebook (FFmpeg check, PyTorch and package installation) are adapted from
+   Wan2GP-on-Colab by Square Zero Labs (Apache License 2.0) —
+   https://github.com/Square-Zero-Labs/Wan2GP-on-Colab
+   Modifications: Kaggle support, pinned WanGP version, headless image editing without a web UI,
+   upload/edit/history cells, safety filter, Hindi instructions.
+
+7. FFmpeg static builds by BtbN — https://github.com/BtbN/FFmpeg-Builds
+   (downloaded only when the runtime's FFmpeg is too old; GPL builds, checksum-verified).
